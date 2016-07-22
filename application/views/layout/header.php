@@ -85,18 +85,18 @@
                             </ul>
                         </li>
                         <li class="dropdown profile">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Emily Hart <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?=$this->session->userdata('data')['nama'];?> <span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown">
                                 <li class="profile-img">
-                                    <img src="../img/profile/picjumbo.com_HNCK4153_resize.jpg" class="profile-img">
+                                    <!-- <img src="../img/profile/picjumbo.com_HNCK4153_resize.jpg" class="profile-img"> -->
                                 </li>
                                 <li>
                                     <div class="profile-info">
-                                        <h4 class="username">Emily Hart</h4>
-                                        <p>emily_hart@email.com</p>
+                                        <h4 class="username"><?=$this->session->userdata('data')['nama'];?></h4>
+                                        <p><?=$this->session->userdata('data')['email'];?></p>
                                         <div class="btn-group margin-bottom-2x" role="group">
-                                            <button type="button" class="btn btn-default"><i class="fa fa-user"></i> Profile</button>
-                                            <button type="button" class="btn btn-default"><i class="fa fa-sign-out"></i> Logout</button>
+                                            <!-- <button type="button" class="btn btn-default"><i class="fa fa-user"></i> Profile</button> -->
+                                            <a href="<?=site_url('auth/logout');?>" class="btn btn-default"><i class="fa fa-sign-out"></i> Logout</a>
                                         </div>
                                     </div>
                                 </li>
@@ -111,15 +111,15 @@
                         <div class="navbar-header">
                             <a class="navbar-brand" href="#">
                                 <div class="icon fa fa-paper-plane"></div>
-                                <div class="title">Flat Admin V.2</div>
+                                <div class="title">Pondok Traveler</div>
                             </a>
                             <button type="button" class="navbar-expand-toggle pull-right visible-xs">
                                 <i class="fa fa-times icon"></i>
                             </button>
                         </div>
                         <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a href="index.html">
+                            <li>
+                                <a href="<?=site_url('home');?>">
                                     <span class="icon fa fa-tachometer"></span><span class="title">Dashboard</span>
                                 </a>
                             </li>

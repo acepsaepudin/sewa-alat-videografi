@@ -28,7 +28,7 @@
                 <div class="login-form row">
                     <div class="col-sm-12 text-center login-header">
                         <i class="login-logo fa fa-connectdevelop fa-5x"></i>
-                        <h4 class="login-title">Pondok Traveler Register Member</h4>
+                        <h4 class="login-title">Pondok Traveler Login</h4>
                     </div>
                     <div class="col-sm-12">
                     <?php if(validation_errors()):?>
@@ -43,35 +43,34 @@
                                 <?= $this->session->flashdata('sukses');?>
                             </div>
                         <?php endif;?>
+                        <?php if($this->session->flashdata('error')):?>
+                           <div class="alert fresh-color alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <?= $this->session->flashdata('error');?>
+                            </div>
+                        <?php endif;?>
                         <div class="login-body">
                             <div class="progress hidden" id="login-progress">
                                 <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                     Register
                                 </div>
                             </div>
-                            <form method="post" action="<?php echo site_url('auth/register');?>">
-                                <div class="control">
-                                    <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" value="<?=set_value('nama')?>" />
-                                </div>
+                            <form method="post" action="<?php echo site_url('auth/login');?>">
+                                
                                 <div class="control">
                                     <input type="email" class="form-control" name="email" placeholder="Email" value="<?=set_value('email')?>"/>
                                 </div>
-                                <div class="control">
-                                    <input type="text" class="form-control" name="alamat" placeholder="Alamat" value="<?=set_value('alamat')?>"/>
-                                </div>
+                                
                                 <div class="control">
                                     <input type="password" class="form-control" name="password" placeholder="Password" />
                                 </div>
-                                <div class="control">
-                                    <input type="password" class="form-control" name="password_confirmation" placeholder="Konfirmasi Password" />
-                                </div>
                                 <div class="login-button text-center">
-                                    <input type="submit" class="btn btn-primary" value="Register">
+                                    <input type="submit" class="btn btn-primary" value="Login">
                                 </div>
                             </form>
                         </div>
                         <div class="login-footer">
-                        <a href="<?=site_url('auth/login');?>" class="btn btn-info">Login</a>
+                        <a href="<?=site_url('auth/register');?>" class="btn btn-info">Register</a>
                             <!-- <span class="text-center"><a href="#" class="color-white">Login</a></span> -->
                         </div>
                     </div>

@@ -8,6 +8,16 @@ create table customer(
 	primary key(id)
 );
 
+create table pegawai(
+	id int(11) not null auto_increment,
+	nama varchar(200),
+	jabatan int(1),
+	email varchar(200),
+	password varchar(200),
+	alamat varchar(200),
+	primary key(id)
+);
+
 create table alat(
 	id int(11) not null auto_increment,
 	nama varchar(200),
