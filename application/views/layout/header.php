@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Flat Admin V.2 - Free Bootstrap Admin Templates</title>
+    <title>Pondok Traveler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset_url();?>lib/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset_url();?>lib/css/animate.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset_url();?>lib/css/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset_url();?>lib/css/bootstrap-datepicker3.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset_url();?>lib/css/checkbox3.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset_url();?>lib/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo asset_url();?>lib/css/dataTables.bootstrap.css">
@@ -142,7 +143,7 @@
                                 <div id="dropdown-element" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="<?= site_url('customer')?>">Input Sewa</a>
+                                            <li><a href="<?= site_url('sewa/add')?>">Input Sewa</a>
                                             </li>
                                             <li><a href="ui-kits/grid.html">List Sewa</a>
                                             </li>
