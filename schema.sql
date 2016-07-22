@@ -26,3 +26,22 @@ create table alat(
 	harga_harian varchar(200),
 	primary key(id)
 );
+
+create table sewa(
+	id int(11) not null auto_increment,
+	tanggal_input datetime,
+	total_harga varchar(200),
+	customer_id int(11),
+	primary key(id)
+);
+
+create table sewa_detail(
+	id int(11) not null auto_increment,
+	sewa_id int(11),
+	alat_id int(11),
+	tgl_sewa datetime,
+	total_hari int(11),
+	jumlah int(11),
+	status int(11),
+	primary key(id)
+);

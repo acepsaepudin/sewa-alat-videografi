@@ -117,7 +117,7 @@
                                 <i class="fa fa-times icon"></i>
                             </button>
                         </div>
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav" id="menu-siderbar">
                             <li>
                                 <a href="<?=site_url('home');?>">
                                     <span class="icon fa fa-tachometer"></span><span class="title">Dashboard</span>
@@ -133,35 +133,18 @@
                                     <span class="icon fa fa-users"></span><span class="title">Data Customer</span>
                                 </a>
                             </li>
+                            
                             <li class="panel panel-default dropdown">
                                 <a data-toggle="collapse" href="#dropdown-element">
-                                    <span class="icon fa fa-desktop"></span><span class="title">UI Kits</span>
+                                    <span class="icon fa fa-shopping-cart"></span><span class="title">Sewa</span>
                                 </a>
                                 <!-- Dropdown level 1 -->
                                 <div id="dropdown-element" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="ui-kits/theming.html">Theming</a>
+                                            <li><a href="<?= site_url('customer')?>">Input Sewa</a>
                                             </li>
-                                            <li><a href="ui-kits/grid.html">Grid</a>
-                                            </li>
-                                            <li><a href="ui-kits/button.html">Buttons</a>
-                                            </li>
-                                            <li><a href="ui-kits/card.html">Cards</a>
-                                            </li>
-                                            <li><a href="ui-kits/list.html">Lists</a>
-                                            </li>
-                                            <li><a href="ui-kits/modal.html">Modals</a>
-                                            </li>
-                                            <li><a href="ui-kits/alert.html">Alerts & Toasts</a>
-                                            </li>
-                                            <li><a href="ui-kits/panel.html">Panels</a>
-                                            </li>
-                                            <li><a href="ui-kits/loader.html">Loaders</a>
-                                            </li>
-                                            <li><a href="ui-kits/step.html">Tabs & Steps</a>
-                                            </li>
-                                            <li><a href="ui-kits/other.html">Other</a>
+                                            <li><a href="ui-kits/grid.html">List Sewa</a>
                                             </li>
                                         </ul>
                                     </div>
