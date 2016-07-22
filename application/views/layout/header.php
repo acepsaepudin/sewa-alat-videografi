@@ -128,6 +128,11 @@
                                     <span class="icon fa fa-desktop"></span><span class="title">Data Alat</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?= site_url('customer')?>">
+                                    <span class="icon fa fa-users"></span><span class="title">Data Customer</span>
+                                </a>
+                            </li>
                             <li class="panel panel-default dropdown">
                                 <a data-toggle="collapse" href="#dropdown-element">
                                     <span class="icon fa fa-desktop"></span><span class="title">UI Kits</span>
