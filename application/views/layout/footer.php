@@ -12,6 +12,7 @@
             <script type="text/javascript" src="<?php echo asset_url();?>lib/js/jquery.matchHeight-min.js"></script>
             <script type="text/javascript" src="<?php echo asset_url();?>lib/js/jquery.dataTables.min.js"></script>
             <script type="text/javascript" src="<?php echo asset_url();?>lib/js/dataTables.bootstrap.min.js"></script>
+            <script type="text/javascript" src="<?php echo asset_url();?>lib/js/bootstrap-datepicker.min.js"></script>
             <script type="text/javascript" src="<?php echo asset_url();?>lib/js/select2.full.min.js"></script>
             <script type="text/javascript" src="<?php echo asset_url();?>lib/js/ace/ace.js"></script>
             <script type="text/javascript" src="<?php echo asset_url();?>lib/js/ace/mode-html.js"></script>
