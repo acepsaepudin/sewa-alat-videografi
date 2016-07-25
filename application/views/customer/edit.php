@@ -39,7 +39,11 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">Status</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="status" class="form-control" id="inputEmail3" value="<?=$customer->status;?>"">
+                                        <select class="form-control" name="status">
+                                            <?php foreach($this->config->item('status_aktivasi') as $k => $v):?>
+                                            <option value="<?=$k?>" <?php echo ($customer->aktivasi == $k) ? 'selected' : ''?>><?=$v?></option>
+                                            <?php endforeach;?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">

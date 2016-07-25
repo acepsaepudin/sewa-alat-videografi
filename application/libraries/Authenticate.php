@@ -29,6 +29,10 @@ Class Authenticate {
             //cek customer
             $customer = $this->CI->customer_model->get_by_id($array_data);
             if ($customer) {
+                if ($customer->aktivasi == 1) {
+                    $this->CI->session->set_flashdata('error','Akun anda belum diaktivasi oleh admin.');
+                    redirect('auth/login');
+                }
                 $kar = (array) $customer;
                 $this->CI->session->set_userdata(['status' => 'user', 'data' => $kar]);
                 redirect('home');

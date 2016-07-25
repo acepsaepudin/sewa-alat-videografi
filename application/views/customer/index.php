@@ -48,7 +48,7 @@
                                                 <td><?= $t->nama;?></td>
                                                 <td><?= $t->email;?></td>
                                                 <td><?= $t->alamat;?></td>
-                                                <td><?= $t->status;?></td>
+                                                <td><?= ($t->aktivasi == 2) ? 'Aktif': 'Belum Diaktivasi' ;?></td>
                                                 <td>
                                                 	<a href="<?=site_url('customer/edit/'.$t->id);?>" class="btn btn-info">Edit</a>
                                                 	<a href="<?=site_url('customer/destroy/'.$t->id);?>" class="btn btn-danger">Hapus</a>

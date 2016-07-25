@@ -8,3 +8,8 @@ $config['status_sewa'] = [
 	'4' => 'Sedang Dipinjam',
 	'5' => 'Sudah Dikembalikan'
 ];
+
+$config['status_aktivasi'] = [
+	'1' => 'Belum Aktif',
+	'2' => 'Aktif',
+];
