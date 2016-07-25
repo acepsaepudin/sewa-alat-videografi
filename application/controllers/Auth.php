@@ -30,9 +30,16 @@ class Auth extends CI_Controller
 						'nama' => $this->input->post('nama'),
 						'alamat' => $this->input->post('alamat'),
 						'status' => 1,
+						'aktivasi' => 1
 					]);
-				$this->session->set_flashdata('sukses', 'Berhasil register, Selanjutnya menunggu aktivasi oleh admin.');
-				$this->load->view('register');
+				$res_email = $this->sendmail($this->input->post('email'), $this->input->post('nama'));
+				if ($res_email) {
+					$this->session->set_flashdata('sukses', 'Berhasil register, Selanjutnya menunggu aktivasi oleh admin.');
+					$this->load->view('register');
+				} else {
+					$this->session->set_flashdata('sukses', 'Ada Kesalahan dalam sistem, Mohon coba beberapa saat lagi.');
+					$this->load->view('register');
+				}
 			}
 		} else {
 			$this->load->view('register');
@@ -65,5 +72,41 @@ class Auth extends CI_Controller
 	{
 		$this->session->sess_destroy();
 		redirect('auth/login');
+	}
+
+	public function sendmail($email,$name)
+	{
+		//set email library configuration
+		 $config = Array(
+		 'protocol' => 'smtp',
+		 'smtp_host' => 'ssl://smtp.googlemail.com',
+		 'smtp_port' => 465,
+		 'smtp_user' => 'robotcontractors@gmail.com',
+		 'smtp_pass' => '123!@#qweem0np45s',
+		 );
+		 
+		 //load email library
+		 $this->load->library('email', $config);
+		 $this->email->set_newline("\r\n");
+		 $this->email->set_mailtype("html");
+		 //set email information and content
+		 $this->email->from('robotcontractors@googlemail.com', 'Pondok Traveler');
+		 $this->email->to($email,$name);
+		 $data['user'] = ['nama' => $name, 'email' => $email];
+		 $message = $this->load->view('emails/register_success',$data,TRUE);
+		 $this->email->subject('Selamat Datang di Pondok Traveler  ');
+		 $this->email->message($message);
+		 
+		 if($this->email->send())
+		 {
+		 // echo 'Your email was sent, fool.';
+		 	return TRUE;
+		 }
+		 
+		 else
+		 {
+		 	return FALSE;
+		 	// show_error($this->email->print_debugger());
+		 }
 	}
 }

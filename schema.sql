@@ -5,6 +5,7 @@ create table customer(
 	nama varchar(200),
 	alamat varchar(200),
 	status int(11),
+	aktivasi int(11),
 	primary key(id)
 );
 
