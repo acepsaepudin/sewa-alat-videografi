@@ -145,7 +145,7 @@
                                         <ul class="nav navbar-nav">
                                             <li><a href="<?= site_url('sewa/add')?>">Input Sewa</a>
                                             </li>
-                                            <li><a href="ui-kits/grid.html">List Sewa</a>
+                                            <li><a href="<?= site_url('sewa/lists')?>">List Sewa</a>
                                             </li>
                                         </ul>
                                     </div>

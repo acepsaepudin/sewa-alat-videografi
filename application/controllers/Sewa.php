@@ -151,4 +151,22 @@ class Sewa extends CI_Controller
 		$this->session->set_flashdata('sukses', 'Silahkan Melakukan pembayaran.');
 		redirect('sewa/add');
 	}
+
+	public function lists()
+	{
+		$sewa = $this->sewa_model->get_all(['customer_id' => $this->session->userdata('data')['id']]);
+		if ($sewa) {
+			$tmp_sewa = $sewa->result();
+			foreach ($tmp_sewa as $key => $value) {
+				//get sewa detail
+				$tmp_sewa[$key]->detail = $this->sewadetail_model->get_by_id(['sewa_id' => $value->id]);
+				// $key[$value]->nama_alat = $this->alat_model->get_by_id(['id' => ])
+			}
+			
+		$data['sewa'] = ($tmp_sewa) ? $tmp_sewa : '';
+		}
+		$this->load->view('layout/header');
+		$this->load->view('sewa/lists', $data);
+		$this->load->view('layout/footer');
+	}
 }
