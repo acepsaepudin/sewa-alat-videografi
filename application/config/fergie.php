@@ -13,3 +13,9 @@ $config['status_aktivasi'] = [
 	'1' => 'Belum Aktif',
 	'2' => 'Aktif',
 ];
+
+$config['status_pegawai'] = [
+	'1' => 'Admin',
+	'2' => 'Pemilik',
+	'3' => 'Staff Delivery',
+];

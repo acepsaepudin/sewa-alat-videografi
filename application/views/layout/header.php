@@ -134,7 +134,11 @@
                                     <span class="icon fa fa-users"></span><span class="title">Data Customer</span>
                                 </a>
                             </li>
-                            
+                            <li>
+                                <a href="<?= site_url('employees')?>">
+                                    <span class="icon fa fa-user"></span><span class="title">Data Pegawai</span>
+                                </a>
+                            </li>
                             <li class="panel panel-default dropdown">
                                 <a data-toggle="collapse" href="#dropdown-element">
                                     <span class="icon fa fa-shopping-cart"></span><span class="title">Sewa</span>
