@@ -10,6 +10,7 @@ class Employees extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		$this->authenticate->check_login();
 		$this->load->model('pegawai_model');
 	}
 
@@ -38,7 +39,7 @@ class Employees extends CI_Controller
 					'nama' => $this->input->post('nama'),
 					'jabatan' => $this->input->post('jabatan'),
 					'email' => $this->input->post('email'),
-					'password' => $this->input->post('password'),
+					'password' => md5($this->input->post('password')),
 					'alamat' => $this->input->post('alamat')
 				];
 				$this->pegawai_model->save($input);
@@ -89,15 +90,24 @@ class Employees extends CI_Controller
 			$this->load->view('employees/edit',$data);
 			$this->load->view('layout/footer');
 		} else {
-
-			$this->pegawai_model->update([
-				'nama' => $this->input->post('nama'),
-				'jabatan' => $this->input->post('jabatan'),
-				'password' => $this->input->post('password'),
-				'alamat' => $this->input->post('alamat')
-			],[
-					'id' => $id
-				]);
+			if ($this->input->post('password')) {
+				$this->pegawai_model->update([
+					'nama' => $this->input->post('nama'),
+					'jabatan' => $this->input->post('jabatan'),
+					'password' => md5($this->input->post('password')),
+					'alamat' => $this->input->post('alamat')
+				],[
+						'id' => $id
+					]);
+			} else {
+				$this->pegawai_model->update([
+					'nama' => $this->input->post('nama'),
+					'jabatan' => $this->input->post('jabatan'),
+					'alamat' => $this->input->post('alamat')
+				],[
+						'id' => $id
+					]);
+			}
 
 			$this->session->set_flashdata('sukses', 'Berhasil Mengubah Data Pegawai');
 			redirect('employees');

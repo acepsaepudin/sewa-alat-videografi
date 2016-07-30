@@ -18,7 +18,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">Modal Success</h4>
+                                                        <h4 class="modal-title" id="myModalLabel">Input Sewa</h4>
                                                     </div>
                                                         <form method="post" action="<?=site_url('sewa/add_item');?>" class="form-horizontal add_item_alat">
                                                             <div class="modal-body">
@@ -29,10 +29,9 @@
                                                                             <input type="text" name="jumlah" class="form-control" id="inputEmail3">
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group form-start form-end">
+                                                                    <!-- <div class="form-group form-start form-end">
                                                                         <label for="inputEmail3" class="col-sm-2 control-label">Tanggal Sewa</label>
                                                                         <div class="col-sm-10">
-                                                                            <!-- <input type="text" name="tgl_sewa" class="form-control" id="tgl_sewa" onkeydown="return false"> -->
                                                                             <div class="input-daterange input-group" id="datepicker">
                                                                                 <input type="text" class="input-sm form-control" name="start" onkeydown="return false"/>
                                                                                 <span class="input-group-addon">Sampai</span>
@@ -40,12 +39,6 @@
                                                                             </div>
                                                                         </div>
 
-                                                                    </div>
-                                                                    <!-- <div class="form-group form-total_hari">
-                                                                        <label for="inputEmail3" class="col-sm-2 control-label">Total Hari</label>
-                                                                        <div class="col-sm-10">
-                                                                            <input type="text" name="total_hari" class="form-control" id="inputEmail3">
-                                                                        </div>
                                                                     </div> -->
                                                             </div>
                                                             <div class="modal-footer">
@@ -131,10 +124,8 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama Alat</th>
-                                                <th>Tanggal Sewa</th>
-                                                <th>Lama Sewa</th>
-                                                <th>Jumlah</th>
-                                                <th>Total</th>
+                                                <th>Jumlah Alat</th>
+                                                <th>Sewa / Hari</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -146,8 +137,6 @@
                                             <tr>
                                                 <th scope="row"><?=$i;?></th>
                                                 <td><?=$v['nama_alat'];?></td>
-                                                <td><?=$v['tgl_sewa'];?></td>
-                                                <td><?=$v['total_hari'];?> Hari</td>
                                                 <td><?=$v['jumlah'];?></td>
                                                 <td>Rp. <?=$v['total'];?></td>
                                                 <td>
@@ -159,16 +148,14 @@
                                         $i++;
                                         endforeach;?>
                                             <tr>
-                                                <td ><strong>Total</strong></td>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
+                                                <td ><strong>Total Sewa Perhari</strong></td>
                                                 <td>&nbsp;</td>
                                                 <td>&nbsp;</td>
                                                 <td>Rp. <?=$tot;?></td>
                                             </tr>
                                         </tbody>
                                     </table> 
-                                    <a href="<?=site_url('sewa/store_all_item');?>" class="btn btn-success pull-right">Selesai</a>
+                                    <a href="<?=site_url('sewa/store_all_item');?>" class="btn btn-success pull-right">Proses Selanjutnya</a>
                                 </div>
                             </div>
                         </div>

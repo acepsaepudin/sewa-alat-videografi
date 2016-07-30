@@ -51,7 +51,7 @@ Class Authenticate {
      */
     public function is_login()
     {
-        return ($this->CI->session->userdata('id')) ? TRUE : FALSE;
+        return ($this->CI->session->userdata('data')) ? TRUE : FALSE;
     }
 
     /**
@@ -116,6 +116,23 @@ Class Authenticate {
             return true;
         }
         
+    }
+
+    public function employee_can_access($id)
+    {
+        $this->CI->load->model('pegawai_model');
+        $user = $this->CI->pegawai_model->get_by_id([
+            'id' => $this->CI->session->userdata('data')['id'],
+            'email' => $this->CI->session->userdata('data')['email']
+        ]);
+        if (in_array($id, array(1,2,3))) {
+            return true;
+        } else {
+            redirect('auth/login');
+        }
+        // if ($user->status == $status) {
+        // } else {
+        // }
     }
 
 

@@ -21,6 +21,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>ID Pembayaran</th>
                                                 <th>Tanggal Input</th>
                                                 <th>Total Bayar</th>
                                                 <th>Aksi</th>
@@ -32,10 +33,11 @@
                                         foreach($sewa as $k => $v):?>
                                             <tr>
                                                 <th scope="row"><?=$i;?></th>
+                                                <td><?=$v->id?></td>
                                                 <td><?=$v->tanggal_input?></td>
                                                 <td>Rp.<?=$v->total_harga?></td>
                                                 <td>
-                                                    <!-- <a href="<?=site_url('sewa/delete_item/'.$k);?>" class="btn btn-danger">Hapus</a> -->
+                                                    <a href="<?=site_url('/');?>" class="btn btn-info">Detail</a>
                                                 </td>
                                             </tr>
                                         <?php 

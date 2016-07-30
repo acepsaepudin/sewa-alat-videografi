@@ -29,7 +29,6 @@ class Sewa extends CI_Controller
 		    }
 		  	$data['sewa'] = $sewa;
 		}
-		
 		$data['alat'] = $this->alat_model->get_all('stok > 0');
 		$this->load->view('layout/header');
 		$this->load->view('sewa/add', $data);
@@ -40,8 +39,8 @@ class Sewa extends CI_Controller
 	{
 		if ($this->input->is_ajax_request()) {
 			$this->form_validation->set_rules('jumlah','Jumlah','required|numeric');
-			$this->form_validation->set_rules('start','Tanggal Sewa','required');
-			$this->form_validation->set_rules('end','Total Hari','required');
+			// $this->form_validation->set_rules('start','Tanggal Sewa','required');
+			// $this->form_validation->set_rules('end','Total Hari','required');
 			$this->form_validation->set_error_delimiters('', '');
 			if ($this->form_validation->run() == false) {
 				echo json_encode([
@@ -67,24 +66,29 @@ class Sewa extends CI_Controller
 					exit();
 				}
 				//reformat start
-				$start = explode('-', $this->input->post('start'));
-				$start_db = $start[2].'-'.$start[1].'-'.$start[0];
-				$start = $start[2].'-'.$start[1].'-'.$start[0];
+				// $start = explode('-', $this->input->post('start'));
+				// $start_db = $start[2].'-'.$start[1].'-'.$start[0];
+				// $start = $start[2].'-'.$start[1].'-'.$start[0];
 
 				//reformat end
-				$end = explode('-', $this->input->post('end'));
-				$end = $end[2].'-'.$end[1].'-'.$end[0];
-				$start = new DateTime($start);
-				$end = new DateTime($end);
-				$total = $start->diff($end);
-				$total = ($total->days == 0) ? 1 : $total->days;
+				// $end = explode('-', $this->input->post('end'));
+				// $end = $end[2].'-'.$end[1].'-'.$end[0];
+				// $start = new DateTime($start);
+				// $end = new DateTime($end);
+				// $total = $start->diff($end);
+				// echo '<pre>';
+				// print_r($total);
+				// echo '</pre>';
+				// exit;
+				// $total = ($total->days == 0) ? 1 : $total->days;
 
 				$array_data = [
 							'alat_id' => $this->input->post('alat_id'),
 							'jumlah' => $this->input->post('jumlah'),
-							'tgl_sewa' => $start_db,
-							'total_hari' => $total,
-							'total' => ($alat->harga_harian*$total)*$this->input->post('jumlah')
+							// 'tgl_sewa' => $start_db,
+							// 'total_hari' => $total,
+							// 'total' => ($alat->harga_harian*$total)*$this->input->post('jumlah')
+							'total' => $alat->harga_harian*$this->input->post('jumlah')
 						];
 				//reduce the stock of alat
 				// $stok = $alat->stok - $this->input->post('jumlah');
@@ -110,6 +114,7 @@ class Sewa extends CI_Controller
 
 	public function delete_item($key)
 	{
+		
 		unset($_SESSION['tmp_sewa'][$key]);
 		$this->session->set_flashdata('sukses', 'Berhasil Menghapus Sewa.');
 		redirect('sewa/add');
@@ -117,39 +122,71 @@ class Sewa extends CI_Controller
 
 	public function store_all_item()
 	{
-		//hitung tiap alat yang disewa
-		$sewa_details = $_SESSION['tmp_sewa'];
-		$total_bayar = 0;
-		foreach ($sewa_details as $key => $value) {
-			$total_bayar += $value['total'];
-		}
-
-		//input ke tabel sewa
-		$id = $this->sewa_model->save([
-				'tanggal_input' => date('Y-m-d'),
-				'total_harga' => $total_bayar,
-				'customer_id' => $_SESSION['data']['id']
-			]);
-		//simpan ke tabel sewa_detail
-		foreach ($sewa_details as $key => $value) {
-			$this->sewadetail_model->save([
-					'sewa_id' => $id,
-					'alat_id' => $value['alat_id'],
-					'tgl_sewa' => $value['tgl_sewa'],
-					'total_hari' => $value['total_hari'],
-					'jumlah' => $value['jumlah'],
-					'status' => '1'
-				]);
-			//update stok 
-			$alat = $this->alat_model->get_by_id(['id' => $value['alat_id']]);
-			$stok = $alat->stok;
-			$stok -= $value['jumlah'];
-			// $stok = $alat->stok - $this->input->post('jumlah');
-			$this->alat_model->update(['stok' => $stok], ['id' => $value['alat_id']]);
-		}
-		unset($_SESSION['tmp_sewa']);
-		$this->session->set_flashdata('sukses', 'Silahkan Melakukan pembayaran.');
-		redirect('sewa/add');
+		// if ($this->input->server('REQUEST_METHOD') == 'POST') {
+		// 	$this->form_validation->set_rules('tgl_sewa','Tanggal Sewa','required');
+		// 	$this->form_validation->set_rules('total_hari','Total Hari ','required');
+			
+		// 	if ($this->form_validation->run() == false) {
+		// 		if (isset($_SESSION['tmp_sewa'])) {
+		// 	    $sewa = $_SESSION['tmp_sewa'];
+		// 	    //get nama alat
+		// 	    foreach ($sewa as $key => $value) {
+			    	
+		// 	    	$sewa[$key]['nama_alat'] = $this->alat_model->get_by_id(['id' => $value['alat_id']])->nama;
+		// 	    }
+		// 	  	$data['sewa'] = $sewa;
+		// 		}
+		// 		$this->load->view('layout/header');
+		// 		$this->load->view('sewa/store_all_item_form', $data);
+		// 		$this->load->view('layout/footer');
+		// 	}
+		// 	die('lulus');
+		// 	//hitung tiap alat yang disewa
+		// 	$sewa_details = $_SESSION['tmp_sewa'];
+		// 	$total_bayar = 0;
+		// 	foreach ($sewa_details as $key => $value) {
+		// 		$total_bayar += $value['total'];
+		// 	}
+		// 	//input ke tabel sewa
+		// 	$id = $this->sewa_model->save([
+		// 			'tanggal_input' => date('Y-m-d'),
+		// 			'total_harga' => $total_bayar,
+		// 			'customer_id' => $_SESSION['data']['id']
+		// 		]);
+		// 	//simpan ke tabel sewa_detail
+		// 	foreach ($sewa_details as $key => $value) {
+		// 		$this->sewadetail_model->save([
+		// 				'sewa_id' => $id,
+		// 				'alat_id' => $value['alat_id'],
+		// 				'tgl_sewa' => $value['tgl_sewa'],
+		// 				'total_hari' => $value['total_hari'],
+		// 				'jumlah' => $value['jumlah'],
+		// 				'status' => '1'
+		// 			]);
+		// 		//update stok 
+		// 		$alat = $this->alat_model->get_by_id(['id' => $value['alat_id']]);
+		// 		$stok = $alat->stok;
+		// 		$stok -= $value['jumlah'];
+		// 		// $stok = $alat->stok - $this->input->post('jumlah');
+		// 		$this->alat_model->update(['stok' => $stok], ['id' => $value['alat_id']]);
+		// 	}
+		// 	unset($_SESSION['tmp_sewa']);
+		// 	$this->session->set_flashdata('sukses', 'Silahkan Melakukan pembayaran.');
+		// 	redirect('sewa/add');
+		// } else {
+			if (isset($_SESSION['tmp_sewa'])) {
+			    $sewa = $_SESSION['tmp_sewa'];
+			    //get nama alat
+			    foreach ($sewa as $key => $value) {
+			    	
+			    	$sewa[$key]['nama_alat'] = $this->alat_model->get_by_id(['id' => $value['alat_id']])->nama;
+			    }
+			  	$data['sewa'] = $sewa;
+			}
+			$this->load->view('layout/header');
+			$this->load->view('sewa/store_all_item_form', $data);
+			$this->load->view('layout/footer');
+		// }
 	}
 
 	public function lists()
@@ -168,5 +205,66 @@ class Sewa extends CI_Controller
 		$this->load->view('layout/header');
 		$this->load->view('sewa/lists', $data);
 		$this->load->view('layout/footer');
+	}
+
+	public function input_sewa()
+	{
+		$this->form_validation->set_rules('tgl_sewa','Tanggal Sewa','required');
+		$this->form_validation->set_rules('total_hari','Total Hari ','required');
+			
+		if ($this->form_validation->run() == false) {
+			if (isset($_SESSION['tmp_sewa'])) {
+		    $sewa = $_SESSION['tmp_sewa'];
+		    //get nama alat
+		    foreach ($sewa as $key => $value) {
+		    	
+		    	$sewa[$key]['nama_alat'] = $this->alat_model->get_by_id(['id' => $value['alat_id']])->nama;
+		    }
+		  	$data['sewa'] = $sewa;
+			}
+			$this->load->view('layout/header');
+			$this->load->view('sewa/store_all_item_form', $data);
+			$this->load->view('layout/footer');
+		} else {
+
+			//hitung tiap alat yang disewa
+			$sewa_details = $_SESSION['tmp_sewa'];
+			$total_bayar = 0;
+			foreach ($sewa_details as $key => $value) {
+				$total_bayar += $value['total'];
+			}
+
+			//reformat tgl_sewa
+			$start = explode('-', $this->input->post('tgl_sewa'));
+			$start_db = $start[2].'-'.$start[1].'-'.$start[0];
+			$start = $start[2].'-'.$start[1].'-'.$start[0];
+			
+			//input ke tabel sewa
+			$id = $this->sewa_model->save([
+					'tanggal_input' => date('Y-m-d'),
+					'total_harga' => $total_bayar,
+					'customer_id' => $_SESSION['data']['id'],
+					'tgl_sewa' => $start,
+					'total_hari' => $this->input->post('total_hari'),
+					'status' => '1'
+				]);
+			//simpan ke tabel sewa_detail
+			foreach ($sewa_details as $key => $value) {
+				$this->sewadetail_model->save([
+						'sewa_id' => $id,
+						'alat_id' => $value['alat_id'],
+						'jumlah' => $value['jumlah'],
+					]);
+				//update stok 
+				$alat = $this->alat_model->get_by_id(['id' => $value['alat_id']]);
+				$stok = $alat->stok;
+				$stok -= $value['jumlah'];
+				// $stok = $alat->stok - $this->input->post('jumlah');
+				$this->alat_model->update(['stok' => $stok], ['id' => $value['alat_id']]);
+			}
+			unset($_SESSION['tmp_sewa']);
+			$this->session->set_flashdata('sukses', 'Silahkan Melakukan pembayaran.');
+			redirect('sewa/add');
+		}
 	}
 }

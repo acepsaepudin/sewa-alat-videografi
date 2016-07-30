@@ -124,21 +124,25 @@
                                     <span class="icon fa fa-tachometer"></span><span class="title">Dashboard</span>
                                 </a>
                             </li>
+                            <?php if($this->session->userdata('status') == 'admin'): ?>
                             <li>
                                 <a href="<?= site_url('alat')?>">
                                     <span class="icon fa fa-desktop"></span><span class="title">Data Alat</span>
                                 </a>
                             </li>
+
                             <li>
                                 <a href="<?= site_url('customer')?>">
                                     <span class="icon fa fa-users"></span><span class="title">Data Customer</span>
                                 </a>
                             </li>
+
                             <li>
                                 <a href="<?= site_url('employees')?>">
                                     <span class="icon fa fa-user"></span><span class="title">Data Pegawai</span>
                                 </a>
                             </li>
+                        <?php endif;?>
                             <li class="panel panel-default dropdown">
                                 <a data-toggle="collapse" href="#dropdown-element">
                                     <span class="icon fa fa-shopping-cart"></span><span class="title">Sewa</span>
@@ -156,90 +160,20 @@
                                 </div>
                             </li>
                             <li class="panel panel-default dropdown">
-                                <a data-toggle="collapse" href="#dropdown-table">
-                                    <span class="icon fa fa-table"></span><span class="title">Table</span>
+                                <a data-toggle="collapse" href="#dropdown-element-bayar">
+                                    <span class="icon fa fa-archive"></span><span class="title">Pembayaran</span>
                                 </a>
                                 <!-- Dropdown level 1 -->
-                                <div id="dropdown-table" class="panel-collapse collapse">
+                                <div id="dropdown-element-bayar" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="table/table.html">Table</a>
+                                            <li><a href="<?= site_url('payment/add')?>">Input Bukti Pembayaran</a>
                                             </li>
-                                            <li><a href="table/datatable.html">Datatable</a>
+                                            <li><a href="<?= site_url('payment/lists')?>">List Pembayaran</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                            </li>
-                            <li class="panel panel-default dropdown">
-                                <a data-toggle="collapse" href="#dropdown-form">
-                                    <span class="icon fa fa-file-text-o"></span><span class="title">Form</span>
-                                </a>
-                                <!-- Dropdown level 1 -->
-                                <div id="dropdown-form" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="nav navbar-nav">
-                                            <li><a href="form/ui-kits.html">Form UI Kits</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- Dropdown-->
-                            <li class="panel panel-default dropdown">
-                                <a data-toggle="collapse" href="#component-example">
-                                    <span class="icon fa fa-cubes"></span><span class="title">Components</span>
-                                </a>
-                                <!-- Dropdown level 1 -->
-                                <div id="component-example" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="nav navbar-nav">
-                                            <li><a href="components/pricing-table.html">Pricing Table</a>
-                                            </li>
-                                            <li><a href="components/chartjs.html">Chart.JS</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- Dropdown-->
-                            <li class="panel panel-default dropdown">
-                                <a data-toggle="collapse" href="#dropdown-example">
-                                    <span class="icon fa fa-slack"></span><span class="title">Page Example</span>
-                                </a>
-                                <!-- Dropdown level 1 -->
-                                <div id="dropdown-example" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="nav navbar-nav">
-                                            <li><a href="pages/login.html">Login</a>
-                                            </li>
-                                            <li><a href="pages/index.html">Landing Page</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- Dropdown-->
-                            <li class="panel panel-default dropdown">
-                                <a data-toggle="collapse" href="#dropdown-icon">
-                                    <span class="icon fa fa-archive"></span><span class="title">Icons</span>
-                                </a>
-                                <!-- Dropdown level 1 -->
-                                <div id="dropdown-icon" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="nav navbar-nav">
-                                            <li><a href="icons/glyphicons.html">Glyphicons</a>
-                                            </li>
-                                            <li><a href="icons/font-awesome.html">Font Awesomes</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="license.html">
-                                    <span class="icon fa fa-thumbs-o-up"></span><span class="title">License</span>
-                                </a>
                             </li>
                         </ul>
                     </div>

@@ -10,6 +10,7 @@ class Customer extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		$this->authenticate->employee_can_access(array(1,2));
 		$this->load->model('customer_model');
 	}
 
