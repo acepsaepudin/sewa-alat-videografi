@@ -93,8 +93,12 @@
                                                 <td>Rp. <?= $t->harga_harian;?></td>
                                                 <td>
                                                 	<!-- <a href="<?=site_url('alat/edit/'.$t->id);?>" class="btn btn-info">Edit</a> -->
-                                                	<!-- <a href="<?=site_url('sewa/item_add/'.$t->id);?>" class="btn btn-danger">Sewa</a> -->
+                                                    <?php if($this->session->userdata('jabatan') == 3):?>
+                                                	<a href="<?=site_url('sewa/edit/'.$t->id);?>" class="btn btn-danger">Edit</a>
+                                                    <?php endif;?>
+                                                    <?php if($this->session->userdata('status') == 'user'):?>
                                                     <button class="btn btn-info" onclick="item_add(<?=$t->id?>)">Sewa</button>
+                                                    <?php endif;?>
                                                 </td>
                                             </tr>
                                         <?php endforeach;?>

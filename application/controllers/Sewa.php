@@ -10,7 +10,7 @@ class Sewa extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['alat_model', 'sewa_model','sewadetail_model']);
+		$this->load->model(['alat_model', 'sewa_model','sewadetail_model','pembayaran_model']);
 	}
 
 	public function add()
@@ -29,7 +29,12 @@ class Sewa extends CI_Controller
 		    }
 		  	$data['sewa'] = $sewa;
 		}
-		$data['alat'] = $this->alat_model->get_all('stok > 0');
+		if ($this->session->userdata('status') == 'admin') {
+			$data['alat'] = $this->alat_model->get_all();
+		} else {
+
+			$data['alat'] = $this->alat_model->get_all('stok > 0');
+		}
 		$this->load->view('layout/header');
 		$this->load->view('sewa/add', $data);
 		$this->load->view('layout/footer');
@@ -191,7 +196,12 @@ class Sewa extends CI_Controller
 
 	public function lists()
 	{
-		$sewa = $this->sewa_model->get_all(['customer_id' => $this->session->userdata('data')['id']]);
+		if ($this->session->userdata('status') == 'admin') {
+			$sewa = $this->sewa_model->get_all();
+		} else {
+
+			$sewa = $this->sewa_model->get_all(['customer_id' => $this->session->userdata('data')['id']]);
+		}
 		if ($sewa) {
 			$tmp_sewa = $sewa->result();
 			foreach ($tmp_sewa as $key => $value) {
@@ -205,6 +215,37 @@ class Sewa extends CI_Controller
 		$this->load->view('layout/header');
 		$this->load->view('sewa/lists', $data);
 		$this->load->view('layout/footer');
+	}
+
+	public function list_details($id_sewa)
+	{
+		$details = $this->sewadetail_model->get_all(['sewa_id' => $id_sewa])->result();
+		$new_array = array();
+		
+		if ($details) {
+			foreach ($details as $key => $value) {
+				$details[$key]->nama_alat = $this->alat_model->get_by_id(['id' => $value->alat_id])->nama;
+			}
+		}
+		$data['id_sewa'] = $id_sewa;
+		$data['sewa'] = $this->sewa_model->get_by_id(['id' => $id_sewa]);
+		$data['details'] = ($details) ? $details : '';
+		$this->load->view('layout/header');
+		$this->load->view('sewa/list_details', $data);
+		$this->load->view('layout/footer');	
+	}
+
+	public function kirim($id_sewa)
+	{
+		if ($id_sewa) {
+			//kirim email
+			//update status ke dikirim
+			$this->sewa_model->update(['status' => 3],['id' => $id_sewa]);
+			$this->session->set_flashdata('sukses', 'Silahkan melakukan pengiriman Alat.');
+			redirect('sewa/lists');
+		} else {
+			redirect('sewa/lists');
+		}
 	}
 
 	public function input_sewa()
@@ -242,7 +283,7 @@ class Sewa extends CI_Controller
 			//input ke tabel sewa
 			$id = $this->sewa_model->save([
 					'tanggal_input' => date('Y-m-d'),
-					'total_harga' => $total_bayar,
+					'total_harga' => ($total_bayar * $this->input->post('total_hari')),
 					'customer_id' => $_SESSION['data']['id'],
 					'tgl_sewa' => $start,
 					'total_hari' => $this->input->post('total_hari'),
@@ -262,9 +303,60 @@ class Sewa extends CI_Controller
 				// $stok = $alat->stok - $this->input->post('jumlah');
 				$this->alat_model->update(['stok' => $stok], ['id' => $value['alat_id']]);
 			}
+
+			//input ke pembayaran
+			$this->pembayaran_model->save([
+					'customer_id' => $_SESSION['data']['id'],
+					'sewa_id' => $id,
+					//set status belum bayar
+					'status' => 1
+				]);
+			//kirim email ke admin
+			$kirim_email = [
+				'email' => 'qwertynesia@gmail.com',
+				'nama' => 'Admin',
+				'subject' => 'Sewa Baru',
+				'view' => 'emails/new_order',
+				'data' => [
+					'id_sewa' => $id
+				]
+			];
+			// sendmail($kirim_email);
 			unset($_SESSION['tmp_sewa']);
-			$this->session->set_flashdata('sukses', 'Silahkan Melakukan pembayaran.');
-			redirect('sewa/add');
+			if (sendmail($kirim_email)) {
+				$this->session->set_flashdata('sukses', 'Silahkan Melakukan pembayaran.');
+				redirect('sewa/add');
+			} else {
+				$this->session->set_flashdata('sukses', 'Input sewa selesai, dan gagal mengirim email ke Admin.');
+				redirect('sewa/add');
+			}
+			
 		}
 	}
+
+	public function edit($id)
+	{
+		$this->form_validation->set_rules('stok', 'Stok', 'required|numeric');
+		$this->form_validation->set_rules('id_sewa', 'ID Sewa', 'required');
+		if ($this->form_validation->run() == false) {
+			$data['alat'] = $this->alat_model->get_by_id(['id' => $id]);
+			$this->load->view('layout/header');
+			$this->load->view('sewa/edit', $data);
+			$this->load->view('layout/footer');
+		} else {
+			$this->alat_model->update([
+					'stok' => $this->input->post('stok')
+				], [
+					'id' => $id
+				]);
+			$this->sewa_model->update([
+					'status' => 4
+				], [
+					'id' => $this->input->post('id_sewa')
+				]);
+			$this->session->set_flashdata('sukses', 'Alat Sudah dikembalikan.');
+			redirect('sewa/edit/'.$id);
+		}
+	}
+
 }

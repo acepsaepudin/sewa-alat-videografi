@@ -11,6 +11,10 @@ class Home extends CI_Controller
 
 	public function index()
 	{
+		// echo '<pre>';
+		// print_r($_SESSION);
+		// echo '</pre>';
+		// exit;
 		$this->load->view('layout/header');
 		$this->load->view('home/index');
 		$this->load->view('layout/footer');

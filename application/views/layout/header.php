@@ -42,7 +42,7 @@
                         <button type="button" class="navbar-right-expand-toggle pull-right visible-xs">
                             <i class="fa fa-times icon"></i>
                         </button>
-                        <li class="dropdown">
+                       <!--  <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
                             <ul class="dropdown-menu animated fadeInDown">
                                 <li class="title">
@@ -52,8 +52,8 @@
                                     No new notification
                                 </li>
                             </ul>
-                        </li>
-                        <li class="dropdown danger">
+                        </li> -->
+                        <!-- <li class="dropdown danger">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-star-half-o"></i> 4</a>
                             <ul class="dropdown-menu danger  animated fadeInDown">
                                 <li class="title">
@@ -84,8 +84,8 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="dropdown profile">
+                        </li> -->
+                        <li class="dropdown profile danger">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?=$this->session->userdata('data')['nama'];?> <span class="caret"></span></a>
                             <ul class="dropdown-menu animated fadeInDown">
                                 <li class="profile-img">
@@ -124,7 +124,7 @@
                                     <span class="icon fa fa-tachometer"></span><span class="title">Dashboard</span>
                                 </a>
                             </li>
-                            <?php if($this->session->userdata('status') == 'admin'): ?>
+                            <?php if(($this->session->userdata('jabatan') == 1)): ?>
                             <li>
                                 <a href="<?= site_url('alat')?>">
                                     <span class="icon fa fa-desktop"></span><span class="title">Data Alat</span>
@@ -151,14 +151,17 @@
                                 <div id="dropdown-element" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
+                                        <?php if(($this->session->userdata('status') == 'user') || ($this->session->userdata('data')['jabatan'] == '3')):?>
                                             <li><a href="<?= site_url('sewa/add')?>">Input Sewa</a>
                                             </li>
+                                        <?php endif;?>
                                             <li><a href="<?= site_url('sewa/lists')?>">List Sewa</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
+                            <?php if(($this->session->userdata('jabatan') == 1) || ($this->session->userdata('jabatan') == 2) || $this->session->userdata('status') == 'user'): ?>
                             <li class="panel panel-default dropdown">
                                 <a data-toggle="collapse" href="#dropdown-element-bayar">
                                     <span class="icon fa fa-archive"></span><span class="title">Pembayaran</span>
@@ -167,14 +170,17 @@
                                 <div id="dropdown-element-bayar" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
+                                        <?php if($this->session->userdata('status') == 'user'):?>
                                             <li><a href="<?= site_url('payment/add')?>">Input Bukti Pembayaran</a>
                                             </li>
+                                        <?php endif;?>
                                             <li><a href="<?= site_url('payment/lists')?>">List Pembayaran</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
+                        <?php endif;?>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->

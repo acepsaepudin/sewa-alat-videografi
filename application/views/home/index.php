@@ -2,19 +2,12 @@
 	<div class="container-fluid">
 	    <div class="side-body padding-top">
 	        <div class="row">
-	            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                    <a href="#">
-                        <div class="card red summary-inline">
-                            <div class="card-body">
-                                <i class="icon fa fa-inbox fa-4x"></i>
-                                <div class="content">
-                                    <div class="title">50</div>
-                                    <div class="sub-title">New Mails</div>
-                                </div>
-                                <div class="clear-both"></div>
+
+	            <div class="col-xs-12">
+                           <div class="alert fresh-color alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                Selamat Datang, <strong><?= $this->session->userdata('data')['nama'];?></strong>
                             </div>
-                        </div>
-                    </a>
                 </div>
 	        </div>
 	        

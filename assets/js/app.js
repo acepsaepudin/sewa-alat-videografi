@@ -45,6 +45,13 @@ $(function(){
     autoclose: true,
     format: "dd-mm-yyyy"
   });
+  $('#datepicker-pembayaran').datepicker({
+    todayHighlight: true,
+    keyboardNavigation: false,
+    // startDate: "now",.
+    autoclose: true,
+    format: "dd-mm-yyyy"
+  });
   //ajax request add item
   $('.add_item_alat').on('submit', function(e){
     // e.preventDefault();

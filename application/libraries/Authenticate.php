@@ -21,9 +21,9 @@ Class Authenticate {
         $session_data = array();
         $this->CI->load->model(['pegawai_model','customer_model']);
         $pengguna = $this->CI->pegawai_model->get_by_id($array_data);
-        if ($pengguna) {
-            $kar = (array) $pengguna;
-            $this->CI->session->set_userdata(['status' => 'admin', 'data' => $kar]);
+        if ($pengguna) 
+{            $kar = (array) $pengguna;
+            $this->CI->session->set_userdata(['status' => 'admin','jabatan' => $pengguna->jabatan, 'data' => $kar]);
             redirect('home');
         } else {
             //cek customer
@@ -34,7 +34,7 @@ Class Authenticate {
                     redirect('auth/login');
                 }
                 $kar = (array) $customer;
-                $this->CI->session->set_userdata(['status' => 'user', 'data' => $kar]);
+                $this->CI->session->set_userdata(['status' => 'user','jabatan' => 'user', 'data' => $kar]);
                 redirect('home');
             } else {
 
@@ -120,15 +120,19 @@ Class Authenticate {
 
     public function employee_can_access($id)
     {
-        $this->CI->load->model('pegawai_model');
-        $user = $this->CI->pegawai_model->get_by_id([
-            'id' => $this->CI->session->userdata('data')['id'],
-            'email' => $this->CI->session->userdata('data')['email']
-        ]);
-        if (in_array($id, array(1,2,3))) {
-            return true;
-        } else {
-            redirect('auth/login');
+        // $this->CI->load->model('pegawai_model');
+        // $user = $this->CI->pegawai_model->get_by_id([
+        //     'id' => $this->CI->session->userdata('data')['id'],
+        //     'email' => $this->CI->session->userdata('data')['email']
+        // ]);
+        foreach ($id as $key => $value) {
+            if (in_array($value, array(1,2,3))) {
+                // die('sini');
+                return true;
+            } else {
+                // die('sono');
+                redirect('auth/login');
+            }
         }
         // if ($user->status == $status) {
         // } else {
