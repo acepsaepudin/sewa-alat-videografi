@@ -68,30 +68,39 @@ class Employees extends CI_Controller
 
 	public function update($id)
 	{
-		$this->form_validation->set_rules('status','Status','required');
+		$data['employees'] = $this->pegawai_model->get_by_id(['id' => $id]);
 
-		$employees = $this->pegawai_model->get_by_id(['id' => $id]);
+		if ($this->input->post('password') || $this->input->post('password_confirmation')) {
+			$this->form_validation->set_rules('password', 'Password','required');
+			$this->form_validation->set_rules('password_confirmation', 'Konfirmasi Password','required|matches[password]');
+			if ($this->form_validation->run() == false) {
+				$this->session->set_flashdata('error', validation_errors());
+				$this->load->view('layout/header');
+				$this->load->view('employees/edit',$data);
+				$this->load->view('layout/footer');
+			}
+		}
+		$this->form_validation->set_rules('nama', 'Nama','required');
+		$this->form_validation->set_rules('alamat', 'Alamat','required');
+
 		if ($this->form_validation->run() == false) {
 			$this->session->set_flashdata('error', validation_errors());
 			$this->load->view('layout/header');
-			$this->load->view('employees/edit',$employees);
+			$this->load->view('employees/edit',$data);
 			$this->load->view('layout/footer');
 		} else {
-			//send email success activation
-			$res_email = $this->sendmail($employees);
-			if ($res_email) {
-				$this->pegawai_model->update([
-						'aktivasi' => $this->input->post('status')
-					],[
-						'id' => $id
-					]);
 
-				$this->session->set_flashdata('sukses', 'Berhasil Mengubah Data employees');
-				redirect('employees');
-			} else {
-				$this->session->set_flashdata('sukses', 'Ada Kesalahan Dalam Mengirim Email, Data Gagal Di Update.');
-				redirect('employees');
-			}
+			$this->pegawai_model->update([
+				'nama' => $this->input->post('nama'),
+				'jabatan' => $this->input->post('jabatan'),
+				'password' => $this->input->post('password'),
+				'alamat' => $this->input->post('alamat')
+			],[
+					'id' => $id
+				]);
+
+			$this->session->set_flashdata('sukses', 'Berhasil Mengubah Data Pegawai');
+			redirect('employees');
 		}
 	}
 
