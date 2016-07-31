@@ -7,6 +7,7 @@ class Home extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		$this->authenticate->check_login();
 	}
 
 	public function index()
