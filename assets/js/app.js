@@ -66,6 +66,7 @@ $(function(){
           $.each(data.datas,function(index,value){
             if (value.length>0) {
               $('.form-'+index).addClass('has-error');
+              $('#errorjumlah').show();
             }
           });
         }
@@ -80,6 +81,7 @@ $(function(){
 function item_add(id) {
   //clear input error flag
   clearError();
+  $('#jmlnya').val('');
   $('#alat_id').empty().val(id);
   $('#modalSuccess').modal();
 }
@@ -88,5 +90,7 @@ function clearError() {
   $('.form-jumlah').removeClass('has-error');
   $('.form-start').removeClass('has-error');
   $('.form-end').removeClass('has-error');
+  
+  $('#errorjumlah').css('display','none');
   // $('.form-total_hari').removeClass('has-error');
 }

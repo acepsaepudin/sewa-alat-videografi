@@ -23,10 +23,11 @@
                                                         <form method="post" action="<?=site_url('sewa/add_item');?>" class="form-horizontal add_item_alat">
                                                             <div class="modal-body">
                                                                     <div class="form-group form-jumlah">
-                                                                        <label for="inputEmail3" class="col-sm-2 control-label">Jumlah</label>
+                                                                        <label for="jmlnya" class="col-sm-2 control-label">Jumlah</label>
                                                                         <div class="col-sm-10">
                                                                             <input type="hidden" name="alat_id" class="form-control" id="alat_id">
-                                                                            <input type="text" name="jumlah" class="form-control" id="inputEmail3">
+                                                                            <input type="text" name="jumlah" class="form-control" id="jmlnya">
+                                                                            <span style="color:red;display: none;" id="errorjumlah">Jumlah Tidak Boleh Kosong Atau Melebihi Stok </span>
                                                                         </div>
                                                                     </div>
                                                                     <!-- <div class="form-group form-start form-end">
