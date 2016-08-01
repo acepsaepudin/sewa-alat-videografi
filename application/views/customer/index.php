@@ -19,7 +19,7 @@
                                     <!-- <div class="card-title"> -->
                                     <div class="title pull-right">
                                     	<!-- <button type="button" class="btn btn-primary">Primary</button> -->
-                                    	<!-- <a href="<?=site_url('alat/add');?>" class="btn btn-primary">Tambah</a> -->
+                                    	<a href="<?=site_url('customer/add');?>" class="btn btn-primary">Tambah</a>
                                     </div>
                                     <!-- </div> -->
                                 </div>

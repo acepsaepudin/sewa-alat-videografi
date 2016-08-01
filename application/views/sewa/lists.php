@@ -28,6 +28,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>ID Sewa</th>
+                                                <th>Nama</th>
                                                 <th>Tanggal Input</th>
                                                 <th>Total Bayar</th>
                                                 <th>Status</th>
@@ -41,6 +42,7 @@
                                             <tr>
                                                 <th scope="row"><?=$i;?></th>
                                                 <td><?=$v->id?></td>
+                                                <td><?=$v->nama?></td>
                                                 <td><?=date('d-m-Y',strtotime($v->tanggal_input));?></td>
                                                 <td>Rp.<?=$v->total_harga?></td>
                                                 <td><?=convert_config('status_sewa',$v->status);?></td>

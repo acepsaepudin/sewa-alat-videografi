@@ -10,7 +10,7 @@ class Sewa extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['alat_model', 'sewa_model','sewadetail_model','pembayaran_model']);
+		$this->load->model(['alat_model', 'sewa_model','sewadetail_model','pembayaran_model','customer_model']);
 	}
 
 	public function add()
@@ -207,12 +207,14 @@ class Sewa extends CI_Controller
 			$tmp_sewa = $sewa->result();
 			foreach ($tmp_sewa as $key => $value) {
 				//get sewa detail
+				$tmp_sewa[$key]->nama = $this->customer_model->get_by_id(['id' => $value->customer_id])->nama;
 				$tmp_sewa[$key]->detail = $this->sewadetail_model->get_by_id(['sewa_id' => $value->id]);
 				// $key[$value]->nama_alat = $this->alat_model->get_by_id(['id' => ])
 			}
 			
 		$data['sewa'] = ($tmp_sewa) ? $tmp_sewa : '';
 		}
+		
 		$this->load->view('layout/header');
 		$this->load->view('sewa/lists', $data);
 		$this->load->view('layout/footer');

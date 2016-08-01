@@ -36,6 +36,38 @@ class Customer extends CI_Controller
 		}
 	}
 
+	public function add()
+	{
+		$this->form_validation->set_rules('nama','Nama Lengkap', 'required');
+		$this->form_validation->set_rules('email','Email', 'required|valid_email|is_unique[customer.email]');
+		$this->form_validation->set_rules('alamat','Alamat', 'required');
+		$this->form_validation->set_rules('password','Password', 'required');
+		$this->form_validation->set_rules('password_confirmation','Konfirmasi Password', 'required|matches[password]');
+		if ($this->form_validation->run() == false) {
+			$this->load->view('layout/header');
+			$this->load->view('customer/add');
+			$this->load->view('layout/footer');
+		} else {
+			// $this->load->model('customer_model');
+			$this->customer_model->save([
+					'email' => $this->input->post('email'),
+					'password' => md5($this->input->post('password')),
+					'nama' => $this->input->post('nama'),
+					'alamat' => $this->input->post('alamat'),
+					'status' => $this->input->post('status'),
+					'aktivasi' => 2
+				]);
+			// $res_email = $this->sendmail($this->input->post('email'), $this->input->post('nama'));
+			// if ($res_email) {
+				$this->session->set_flashdata('sukses', 'Berhasil Menambah Customer Baru.');
+				$this->load->view('customer');
+			// } else {
+				// $this->session->set_flashdata('sukses', 'Ada Kesalahan dalam sistem, Mohon coba beberapa saat lagi.');
+				// $this->load->view('register');
+			// }
+		}
+	}
+
 	public function update($id)
 	{
 		$this->form_validation->set_rules('status','Status','required');
