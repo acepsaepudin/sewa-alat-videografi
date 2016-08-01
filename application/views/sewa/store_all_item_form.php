@@ -83,7 +83,7 @@
                                 
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-success">Selesai</button>
+                                        <button type="submit" class="btn btn-success">Simpan</button>
                                         <a href="<?=site_url('sewa/add');?>" class="btn btn-default">Kembali</a>
                                     </div>
                                 </div>

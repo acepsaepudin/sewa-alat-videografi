@@ -33,8 +33,8 @@ class Alat extends CI_Controller
 	{
 		$this->form_validation->set_rules('nama','Nama','required');
 		$this->form_validation->set_rules('deskripsi','Deskripsi','required');
-		$this->form_validation->set_rules('stok','Stok','required');
-		$this->form_validation->set_rules('harga_harian','Harga Per Hari','required');
+		$this->form_validation->set_rules('stok','Stok','required|is_natural');
+		$this->form_validation->set_rules('harga_harian','Harga Per Hari','required|is_natural');
 
 		if ($this->form_validation->run() == false) {
 			$this->session->set_flashdata('error', validation_errors());

@@ -29,6 +29,7 @@ class Sewa extends CI_Controller
 		    }
 		  	$data['sewa'] = $sewa;
 		}
+
 		if ($this->session->userdata('status') == 'admin') {
 			$data['alat'] = $this->alat_model->get_all();
 		} else {

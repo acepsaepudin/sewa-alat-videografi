@@ -98,7 +98,8 @@
                                                 	<a href="<?=site_url('sewa/edit/'.$t->id);?>" class="btn btn-danger">Edit</a>
                                                     <?php endif;?>
                                                     <?php if($this->session->userdata('status') == 'user'):?>
-                                                    <button class="btn btn-info" onclick="item_add(<?=$t->id?>)">Sewa</button>
+                                                        <?php ?>
+                                                    <button class="btn btn-info" onclick="item_add(<?=$t->id?>)" <?php if($_SESSION['tmp_sewa']){ foreach($_SESSION['tmp_sewa'] as $s){ if($t->id == $s['alat_id']){ echo 'disabled';}}};?>>Sewa</button >
                                                     <?php endif;?>
                                                 </td>
                                             </tr>
