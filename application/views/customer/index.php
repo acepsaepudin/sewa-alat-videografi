@@ -48,10 +48,14 @@
                                                 <td><?= $t->nama;?></td>
                                                 <td><?= $t->email;?></td>
                                                 <td><?= $t->alamat;?></td>
-                                                <td><?= ($t->aktivasi == 2) ? 'Aktif': 'Belum Diaktivasi' ;?></td>
+                                                <td><?= ($t->status == 1) ? 'Aktif': 'Non Aktif' ;?></td>
                                                 <td>
                                                 	<a href="<?=site_url('customer/edit/'.$t->id);?>" class="btn btn-info">Edit</a>
-                                                	<a href="<?=site_url('customer/destroy/'.$t->id);?>" class="btn btn-danger">Hapus</a>
+                                                    <?php if($t->status == 1):?>
+                                                    <a href="<?=site_url('customer/non_aktif/'.$t->id);?>" class="btn btn-danger">Non Aktif</a>
+                                                    <?php else:?>
+                                                    <a href="<?=site_url('customer/aktif/'.$t->id);?>" class="btn btn-success">Aktif</a>
+                                                <?php endif;?>
                                                 </td>
                                             </tr>
                                         <?php endforeach;?>

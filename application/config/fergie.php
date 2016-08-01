@@ -16,6 +16,10 @@ $config['status_aktivasi'] = [
 	'2' => 'Aktif',
 ];
 
+$config['status_user'] = [
+	'1' => 'Aktif',
+	'2' => 'Non Aktif',
+];
 $config['status_pegawai'] = [
 	'1' => 'Admin',
 	'2' => 'Pemilik',

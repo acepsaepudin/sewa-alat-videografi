@@ -74,6 +74,26 @@ class Customer extends CI_Controller
 			redirect('customer');
 		}
 	}
+
+	public function non_aktif($id)
+	{
+		// $customer = $this->customer_model->get_by_id(['id' => $id]);
+		if ($id) {
+			$this->customer_model->update(['status' => '2'],['id' => $id]);
+			$this->session->set_flashdata('sukses','Berhasil Menonaktifkan Customer');
+			redirect('customer');
+		}
+	}
+
+	public function aktif($id)
+	{
+		// $customer = $this->customer_model->get_by_id(['id' => $id]);
+		if ($id) {
+			$this->customer_model->update(['status' => '1'],['id' => $id]);
+			$this->session->set_flashdata('sukses','Berhasil Mengaktifkan Customer');
+			redirect('customer');
+		}
+	}
 	public function sendmail($data)
 	{
 		//set email library configuration
