@@ -122,6 +122,7 @@
                             <li>
                                 <a href="<?=site_url('home');?>">
                                     <span class="icon fa fa-tachometer"></span><span class="title">Dashboard</span>
+
                                 </a>
                             </li>
                             <?php if(($this->session->userdata('jabatan') == 1)): ?>
@@ -134,6 +135,7 @@
                             <li>
                                 <a href="<?= site_url('customer')?>">
                                     <span class="icon fa fa-users"></span><span class="title">Data Customer</span>
+                                    <span class="label label-primary pull-right datacustomer-admin"></span>
                                 </a>
                             </li>
 
@@ -156,6 +158,9 @@
                                             </li>
                                         <?php endif;?>
                                             <li><a href="<?= site_url('sewa/lists')?>">List Sewa</a>
+                                            <?php if($this->session->userdata('data')['jabatan'] == '1'):?>
+                                            <span class="label label-primary pull-right data-sewa-to-admin"></span>
+                                        <?php endif;?>
                                             </li>
                                         </ul>
                                     </div>
@@ -175,6 +180,7 @@
                                             </li>
                                         <?php endif;?>
                                             <li><a href="<?= site_url('payment/lists')?>">List Pembayaran</a>
+                                            <span class="label label-primary pull-right">4</span>
                                             </li>
                                         </ul>
                                     </div>

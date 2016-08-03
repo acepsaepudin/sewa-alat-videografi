@@ -94,3 +94,48 @@ function clearError() {
   $('#errorjumlah').css('display','none');
   // $('.form-total_hari').removeClass('has-error');
 }
+$(function(){
+  setInterval(function(){
+  getRegisterUser();
+  getSewaToAdmin();
+  },5000); //set 10 detik
+});
+
+function getRegisterUser() {
+    $.ajax({
+        url: "http://sewa-videografi.local/ajaxnotif/get_register_user",
+        async: true,            // by default, it's async, but...
+        dataType: 'json',       // or the dataType you are working with
+        timeout: 5000,          // IMPORTANT! this is a 10 seconds timeout
+        cache: false
+
+    }).done(function (eventListdua) {  
+      console.log('heheh');
+      if(eventListdua.total != 0) {
+        $('.datacustomer-admin').html(eventListdua.total);
+        // alert(eventListdua.total);
+      } else {
+        $('.datacustomer-admin').html('');
+      }
+        // $('.operasionaltotal').html('ganteng');
+    });
+}
+function getSewaToAdmin() {
+    $.ajax({
+        url: "http://sewa-videografi.local/ajaxnotif/get_sewa_alat_to_admin",
+        async: true,            // by default, it's async, but...
+        dataType: 'json',       // or the dataType you are working with
+        timeout: 5000,          // IMPORTANT! this is a 10 seconds timeout
+        cache: false
+
+    }).done(function (eventListdua) {  
+      console.log('heheh');
+      if(eventListdua.total != 0) {
+        $('.data-sewa-to-admin').html(eventListdua.total);
+        // alert(eventListdua.total);
+      } else {
+        $('.data-sewa-to-admin').html('');
+      }
+        // $('.operasionaltotal').html('ganteng');
+    });
+}
