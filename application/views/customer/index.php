@@ -27,6 +27,7 @@
                                     <table class="datatable table table-striped" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
+                                                <th>ID Customer</th>
                                                 <th>Nama</th>
                                                 <th>Email</th>
                                                 <th>Alamat</th>
@@ -45,6 +46,7 @@
                                         <tbody>
                                         <?php foreach($customer->result() as $t):?>
                                         	<tr>
+                                                <td><?= $t->id;?></td>
                                                 <td><?= $t->nama;?></td>
                                                 <td><?= $t->email;?></td>
                                                 <td><?= $t->alamat;?></td>
