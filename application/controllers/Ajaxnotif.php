@@ -14,7 +14,7 @@ class Ajaxnotif extends CI_Controller
 	public function get_register_user()
 	{
 		//get user belum aktivasi
-		$users = $this->customer_model->get_all(['aktivasi' => 2]);
+		$users = $this->customer_model->get_all(['aktivasi' => 1]);
 		if ($users->num_rows() > 0) {
 			echo json_encode([
 				'error' => 1,

@@ -29,7 +29,7 @@ class Auth extends CI_Controller
 						'password' => md5($this->input->post('password')),
 						'nama' => $this->input->post('nama'),
 						'alamat' => $this->input->post('alamat'),
-						'status' => $this->input->post('status'),
+						'status' => 2,
 						'aktivasi' => 1
 					]);
 				$res_email = $this->sendmail($this->input->post('email'), $this->input->post('nama'));
