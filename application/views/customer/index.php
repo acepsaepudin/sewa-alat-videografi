@@ -29,25 +29,27 @@
                                             <tr>
                                                 <th>ID Customer</th>
                                                 <th>Nama</th>
+                                                <th>Password</th>
                                                 <th>Email</th>
                                                 <th>Alamat</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tfoot>
+                                        <!-- <tfoot>
                                             <tr>
                                                 <th>Nama</th>
                                                 <th>Deskripsi</th>
                                                 <th>Stok</th>
                                                 <th>Harga Per Hari</th>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot> -->
                                         <tbody>
                                         <?php foreach($customer->result() as $t):?>
                                         	<tr>
                                                 <td><?= $t->id;?></td>
                                                 <td><?= $t->nama;?></td>
+                                                <td><?= $t->password;?></td>
                                                 <td><?= $t->email;?></td>
                                                 <td><?= $t->alamat;?></td>
                                                 <td><?= ($t->status == 1) ? 'Aktif': 'Non Aktif' ;?></td>

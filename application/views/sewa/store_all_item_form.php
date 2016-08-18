@@ -70,13 +70,13 @@
                             <form class="form-horizontal" method="post" action="<?=site_url('sewa/input_sewa');?>">
                                 <div class="form-group" >
                                     <label for="inputEmail3" class="col-sm-2 control-label">Tanggal Sewa</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-3">
                                         <input type="text" name="tgl_sewa" class="form-control" id="datepicker" onkeydown="return false" value="<?=set_value('tgl_sewa')?>">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">Total Hari</label>
-                                    <div class="col-sm-10">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Jumlah Hari Sewa</label>
+                                    <div class="col-sm-3">
                                         <input type="text" name="total_hari" class="form-control" id="inputEmail3" value="<?=set_value('total_hari')?>">
                                     </div>
                                 </div>

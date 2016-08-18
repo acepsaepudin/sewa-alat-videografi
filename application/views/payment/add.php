@@ -24,6 +24,12 @@
                         <?= $this->session->flashdata('sukses');?>
                 </div>
             <?php endif;?>
+            <?php if($this->session->flashdata('err')):?>
+               <div class="alert fresh-color alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <?= $this->session->flashdata('err');?>
+                </div>
+            <?php endif;?>
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">

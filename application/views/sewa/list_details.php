@@ -20,7 +20,7 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>No</th>
                                                 <th>Nama Alat</th>
                                                 <th>Jumlah</th>
                                                 <!-- <th>Aksi</th> -->

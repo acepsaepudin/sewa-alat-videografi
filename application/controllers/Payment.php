@@ -58,6 +58,17 @@ class Payment extends CI_Controller
 				// 	$this->session->set_flashdata('error', array('Pembayaran '));
     //             	redirect('payment/add');
 				// }
+
+				//cek sudah bayar apa belum gan
+            	$bayarbelum = $this->pembayarandetail_model->get_by_id(['pembayaran_id' => $this->input->post('pembayaran_id')]);
+            	if ($bayarbelum) {
+            		if ($bayarbelum->tipe_bayar == $this->input->post('tipe_bayar')) {
+            			$this->session->set_flashdata('err', 'Tidak bisa input tipe pembayaran yang sama.');
+	                	redirect('payment/add');
+            		}
+            	}
+            	
+
 				//cek jika pernah melakukan 
                 $uploadan = $this->upload->data();
                 //nama file

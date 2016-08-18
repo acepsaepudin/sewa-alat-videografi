@@ -180,7 +180,7 @@
                                             </li>
                                         <?php endif;?>
                                             <li><a href="<?= site_url('payment/lists')?>">List Pembayaran</a>
-                                            <span class="label label-primary pull-right">4</span>
+                                            <span class="label label-primary pull-right"></span>
                                             </li>
                                         </ul>
                                     </div>
