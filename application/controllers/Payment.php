@@ -125,14 +125,26 @@ class Payment extends CI_Controller
 		} else {
 			$data['pembayaran'] = $this->pembayaran_model->get_all()->result();
 		}
+		$bayar = array();
 		if ($data['pembayaran']) {
 			foreach ($data['pembayaran'] as $key => $value) {
-				$data['pembayaran_detail'] = $this->pembayarandetail_model->get_all(['pembayaran_id' => $value->id])->result();
+				// $data['pembayaran_detail'] = $this->pembayarandetail_model->get_all(['pembayaran_id' => $value->id])->result();
+				$b = $this->pembayarandetail_model->get_all(['pembayaran_id' => $value->id]);
+				if ($b->num_rows() > 1) {
+					foreach ($b->result() as $k => $v) {
+						$bayar[] = $v;
+					}
+				}
+				if ($b->num_rows() == 1) {
+					$bayar[] = $b->row();
+				}
 			}
-		} else {
-			$data['pembayaran_detail'] = '';
-		}
+		} 
+		// else {
+		// 	$data['pembayaran_detail'] = '';
+		// }
 		
+		$data['pembayaran_detail'] = $bayar;
 		$this->load->view('layout/header');
 		$this->load->view('payment/lists',$data);
 		$this->load->view('layout/footer');
