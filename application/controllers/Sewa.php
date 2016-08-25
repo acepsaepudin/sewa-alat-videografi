@@ -10,7 +10,7 @@ class Sewa extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['alat_model', 'sewa_model','sewadetail_model','pembayaran_model','customer_model']);
+		$this->load->model(['alat_model', 'sewa_model','sewadetail_model','pembayaran_model','customer_model','pembayarandetail_model']);
 	}
 
 	public function add()
@@ -371,6 +371,38 @@ class Sewa extends CI_Controller
 			$this->session->set_flashdata('sukses', 'Alat Sudah dikembalikan.');
 			redirect('sewa/edit/'.$id);
 		}
+	}
+
+	public function cancel_booking($id_sewa)
+	{
+		//get sewa_detail
+		$sewa_details = $this->sewadetail_model->get_all(['sewa_id' => $id_sewa])->result();
+		
+		foreach ($sewa_details as $key => $value) {
+			$get_alat = $this->alat_model->get_by_id(['id' => $value->alat_id]);
+			
+			//balikan stok alat
+			$this->alat_model->update(['stok' => ($get_alat->stok + $value->jumlah)],['id' => $get_alat->id]);
+
+		}
+		//delete sewa detail tersebut
+		$this->sewadetail_model->destroy(['sewa_id' => $id_sewa]);
+		//delete sewa
+		$this->sewa_model->destroy(['id' => $id_sewa]);
+
+		//get pembayaran
+		$byr = $this->pembayaran_model->get_all(['sewa_id' => $id_sewa]);
+		if ($byr->num_rows() > 0) {
+			$byr = $byr->result();
+			foreach ($byr as $key => $value) {
+				$byr_detail = $this->pembayarandetail_model->get_by_id(['pembayaran_id' => $value->id]);
+				if ($byr_detail) {
+					$this->pembayarandetail_model->destroy(['id' => $byr_detail->id]);
+				}
+			}
+			$this->pembayaran_model->destroy(['sewa_id' => $id_sewa]);
+		}
+		redirect('sewa/lists');
 	}
 
 }
