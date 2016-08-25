@@ -270,7 +270,9 @@ class Sewa extends CI_Controller
 			$this->load->view('sewa/store_all_item_form', $data);
 			$this->load->view('layout/footer');
 		} else {
-
+			//get user info
+			$info_user = $this->customer_model->get_by_id(['id' => $_SESSION['data']['id']]);
+			
 			//hitung tiap alat yang disewa
 			$sewa_details = $_SESSION['tmp_sewa'];
 			$total_bayar = 0;
@@ -308,20 +310,29 @@ class Sewa extends CI_Controller
 			}
 
 			//input ke pembayaran
-			$this->pembayaran_model->save([
-					'customer_id' => $_SESSION['data']['id'],
-					'sewa_id' => $id,
-					//set status belum bayar
-					'status' => 1
-				]);
+			$pembayaran_id = $this->pembayaran_model->save([
+								'customer_id' => $_SESSION['data']['id'],
+								'sewa_id' => $id,
+								//set status belum bayar
+								'status' => 1
+							]);
+			$data_alat = $this->sewadetail_model->get_all(['sewa_id' => $id])->result();
+			$sewas = $this->sewa_model->get_by_id(['id' => $id]);
+
+			foreach ($data_alat as $key => $value) {
+				$data_alat[$key]->nama = $this->alat_model->get_by_id(['id' => $value->alat_id])->nama;
+			}
 			//kirim email ke admin
 			$kirim_email = [
-				'email' => 'qwertynesia@gmail.com',
+				'email' => $info_user->email,
 				'nama' => 'Admin',
-				'subject' => 'Sewa Baru',
+				'subject' => 'Invoice Pondok Traveller',
 				'view' => 'emails/new_order',
 				'data' => [
-					'id_sewa' => $id
+					'id_sewa' => $id,
+					'nama' => $info_user->nama,
+					'alat' => $data_alat,
+					'sewa' => $sewas
 				]
 			];
 			// sendmail($kirim_email);

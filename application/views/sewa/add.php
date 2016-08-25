@@ -99,7 +99,7 @@
                                                     <?php endif;?>
                                                     <?php if($this->session->userdata('status') == 'user'):?>
                                                         <?php ?>
-                                                    <button class="btn btn-info" onclick="item_add(<?=$t->id?>)" <?php if($_SESSION['tmp_sewa']){ foreach($_SESSION['tmp_sewa'] as $s){ if($t->id == $s['alat_id']){ echo 'disabled';}}};?>>Sewa</button >
+                                                    <button class="btn btn-info" onclick="item_add(<?=$t->id?>)" <?php if(isset($_SESSION['tmp_sewa'])){ foreach($_SESSION['tmp_sewa'] as $s){ if($t->id == $s['alat_id']){ echo 'disabled';}}};?>>Sewa</button >
                                                     <?php endif;?>
                                                 </td>
                                             </tr>
