@@ -187,6 +187,13 @@
                                 </div>
                             </li>
                         <?php endif;?>
+                        <?php if($this->session->userdata('data')['jabatan'] == '3'):?>
+                            <li>
+                                <a href="<?= site_url('payment/pelunasan')?>">
+                                    <span class="icon fa fa-archive"></span><span class="title">Input Bukti Pelunasan</span>
+                                </a>
+                            </li>
+                        <?php endif;?>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->

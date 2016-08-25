@@ -91,23 +91,23 @@ class Payment extends CI_Controller
                 //kirim email ke user
                 $sewa = $this->pembayaran_model->get_by_id(['id' => $this->input->post('pembayaran_id')]);
                 $tipebayar = ($this->input->post('tipe_bayar') == 1) ? 'DP': 'Pelunasan';
-				$kirim_email = [
-					'email' => 'qwertynesia@gmail.com',
-					'nama' => 'Admin',
-					'subject' => $tipebayar.' Untuk ID Sewa #'.$sewa->sewa_id,
-					'view' => 'emails/new_dp_input',
-					'data' => [
-						'id_sewa' => $sewa->sewa_id,
-						'total' => $this->input->post('jumlah_bayar')
-					]
-				];
-				if (sendmail($kirim_email)) {
+				// $kirim_email = [
+				// 	'email' => 'qwertynesia@gmail.com',
+				// 	'nama' => 'Admin',
+				// 	'subject' => $tipebayar.' Untuk ID Sewa #'.$sewa->sewa_id,
+				// 	'view' => 'emails/new_dp_input',
+				// 	'data' => [
+				// 		'id_sewa' => $sewa->sewa_id,
+				// 		'total' => $this->input->post('jumlah_bayar')
+				// 	]
+				// ];
+				// if (sendmail($kirim_email)) {
 	                $this->session->set_flashdata('sukses', 'Sukses Input pembayaran.');
+	                // redirect('payment/add');
+				// } else {
+					// $this->session->set_flashdata('sukses', 'Sukses Input pembayaran dan gagal mengirim email ke admin.');
 	                redirect('payment/add');
-				} else {
-					$this->session->set_flashdata('sukses', 'Sukses Input pembayaran dan gagal mengirim email ke admin.');
-	                redirect('payment/add');
-				}
+				// }
             }
 		}
 		// $data['pembayaran'] = $this->pembayaran_model->get_all(['customer_id' => $this->session->userdata('data')['id']])->result();
@@ -203,5 +203,107 @@ class Payment extends CI_Controller
 		} else {
 			redirect('payment/lists');
 		}
+	}
+	public function pelunasan()
+	{
+		$this->form_validation->set_rules('jumlah_bayar', 'Jumlah Bayar', 'required');
+		$this->form_validation->set_rules('tgl_bayar', 'Tanggal Bayar', 'required');
+		if ($this->form_validation->run() == false) {
+			$data['pembayaran'] = $this->pembayaran_model->get_all("status = 2 AND status != 3 AND status !=1")->result();
+			
+			$this->load->view('layout/header');
+			$this->load->view('payment/lunas',$data);
+			$this->load->view('layout/footer');
+		} else {
+			$config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'gif|jpg|png';
+            $config['max_size']             = 1000;
+            $config['max_width']            = 2048;
+            $config['max_height']           = 2048;
+
+            $this->load->library('upload', $config);
+
+            if ( ! $this->upload->do_upload('bukti_bayar'))
+            {
+                    $data['error'] = array('error' => $this->upload->display_errors());
+
+                    $data['pembayaran'] = $this->pembayaran_model->get_all("status = 2 AND status != 3 AND status !=1")->result();
+
+					$this->load->view('layout/header');
+					$this->load->view('payment/lunas',$data);
+					$this->load->view('layout/footer');
+            }
+            else
+            {
+				// $tipe_bayar = $this->input->post('tipe_bayar');
+				// //cek tipe pelunasan jika pembayaran belum sesuai dengan total yang harus dibayar
+				// if ($tipe_bayar == 2) {
+					
+				// }
+				//cek jumlah bayar minimal 50% dari total pembayaran
+				// $data_bayar = $this->pembayaran_model->get_by_id(['id' => $this->input->post('pembayaran_id')]);
+				// $data_sewa = $this->sewa_model->get_by_id(['id' => $data_bayar->sewa_id]);
+				// $setengah = ($data_sewa->total_harga * 50) / 100;
+				// if ($this->input->post('jumlah_bayar') < $setengah) {
+				// 	$this->session->set_flashdata('error', array('Pembayaran '));
+    //             	redirect('payment/add');
+				// }
+
+				//cek sudah bayar apa belum gan
+            	$bayarbelum = $this->pembayarandetail_model->get_by_id(['pembayaran_id' => $this->input->post('pembayaran_id')]);
+            	if ($bayarbelum) {
+            		if ($bayarbelum->tipe_bayar == $this->input->post('tipe_bayar')) {
+            			$this->session->set_flashdata('err', 'Tidak bisa input tipe pembayaran yang sama.');
+	                	redirect('payment/pelunasan');
+            		}
+            	}
+            	
+
+				//cek jika pernah melakukan 
+                $uploadan = $this->upload->data();
+                //nama file
+                $bukti_bayar = $uploadan['file_name'];
+
+                //reformat tgl_bayar
+				$start = explode('-', $this->input->post('tgl_bayar'));
+				$start_db = $start[2].'-'.$start[1].'-'.$start[0];
+				$start = $start[2].'-'.$start[1].'-'.$start[0];
+                //input ke pembayaran detail
+                $pembayaran_detail = [
+                	'pembayaran_id' => $this->input->post('pembayaran_id'),
+                	'tipe_bayar' => $this->input->post('tipe_bayar'),
+                	'status_bayar' => 1,
+                	'jumlah_bayar' => $this->input->post('jumlah_bayar'),
+                	'bukti_bayar' => $bukti_bayar,
+                	'tgl_bayar' => $start
+                ];
+	            $this->pembayarandetail_model->save($pembayaran_detail);
+                //kirim email ke user
+                $sewa = $this->pembayaran_model->get_by_id(['id' => $this->input->post('pembayaran_id')]);
+                $tipebayar = ($this->input->post('tipe_bayar') == 1) ? 'DP': 'Pelunasan';
+				// $kirim_email = [
+				// 	'email' => 'qwertynesia@gmail.com',
+				// 	'nama' => 'Admin',
+				// 	'subject' => $tipebayar.' Untuk ID Sewa #'.$sewa->sewa_id,
+				// 	'view' => 'emails/new_dp_input',
+				// 	'data' => [
+				// 		'id_sewa' => $sewa->sewa_id,
+				// 		'total' => $this->input->post('jumlah_bayar')
+				// 	]
+				// ];
+				// if (sendmail($kirim_email)) {
+	                $this->session->set_flashdata('sukses', 'Sukses Input pembayaran.');
+	                // redirect('payment/add');
+				// } else {
+					// $this->session->set_flashdata('sukses', 'Sukses Input pembayaran dan gagal mengirim email ke admin.');
+	                redirect('payment/pelunasan');
+				// }
+            }
+		}
+		// $data['pembayaran'] = $this->pembayaran_model->get_all(['customer_id' => $this->session->userdata('data')['id']])->result();
+
+		// $this->load->view('layout/header');
+		// $this->load->view('payment/add',$data);
+		// $this->load->view('layout/footer');
 	}
 }
