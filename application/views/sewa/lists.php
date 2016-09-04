@@ -5,7 +5,18 @@
                 <?php if($sewa):?>
                     <div class="page-title">
                         <span class="title">Daftar Sewa</span>
-                        <!-- <div class="description"></div> -->
+                        <div class="description">
+                            <table>
+                                <tr>
+                                    <td>No Rek</td>
+                                    <td>: 2797008954 BCA an Pondok Traveller</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>Deadline Transfer</td>
+                                    <td>: <?=date('d-m-Y',strtotime($sewa->tgl_sewa. '+ 2 days'));;?></td>
+                                </tr> -->
+                            </table>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">

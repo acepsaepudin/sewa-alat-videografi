@@ -7,10 +7,10 @@
                         <span class="title">Daftar Sewa Detail</span>
                         <div class="description">
                             <table>
-                                <tr>
+                                <!-- <tr>
                                     <td>No Rek :</td>
                                     <td>: 2797008954 BCA an Pondok Traveller</td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td>Deadline Transfer</td>
                                     <td>: <?=date('d-m-Y',strtotime($sewa->tgl_sewa. '+ 2 days'));;?></td>

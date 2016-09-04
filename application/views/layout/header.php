@@ -158,7 +158,7 @@
                                             </li>
                                         <?php endif;?>
                                             <li><a href="<?= site_url('sewa/lists')?>">List Sewa</a>
-                                            <?php if($this->session->userdata('data')['jabatan'] == '1'):?>
+                                            <?php if(isset($this->session->userdata('data')['jabatan']) == '1'):?>
                                             <span class="label label-primary pull-right data-sewa-to-admin"></span>
                                         <?php endif;?>
                                             </li>
@@ -187,7 +187,7 @@
                                 </div>
                             </li>
                         <?php endif;?>
-                        <?php if($this->session->userdata('data')['jabatan'] == '3'):?>
+                        <?php if(isset($this->session->userdata('data')['jabatan']) == '3'):?>
                             <li>
                                 <a href="<?= site_url('payment/pelunasan')?>">
                                     <span class="icon fa fa-archive"></span><span class="title">Input Bukti Pelunasan</span>
