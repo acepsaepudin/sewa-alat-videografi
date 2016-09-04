@@ -402,7 +402,38 @@ class Sewa extends CI_Controller
 			}
 			$this->pembayaran_model->destroy(['sewa_id' => $id_sewa]);
 		}
-		redirect('sewa/lists');
+		// redirect('sewa/lists');
+	}
+
+	public function cron_cancel_booking()
+	{
+		date_default_timezone_set("Asia/Jakarta");
+		$now = new DateTime(date('Y-m-d'));
+
+		$get_all_sewa = $this->sewa_model->get_all();
+
+		if ($get_all_sewa->num_rows() > 0) {
+			$get_all_sewa = $get_all_sewa->result();
+
+			foreach ($get_all_sewa as $key => $value) {
+				$cek = date_diff($now, new DateTime($value->tgl_sewa));
+				// echo "<pre>";
+				// print_r($cek);
+				// echo "<pre>";
+				// exit();
+				if ($cek->invert == 1 & $cek->days > 2) {
+					$this->cancel_booking($value->id);
+				}
+			}
+		}
+		
+		// echo "<pre>";
+		// print_r($now);
+		// print_r($get_all_sewa->row()->tgl_sewa);
+		// print_r(date_diff($now, new DateTime($get_all_sewa->row()->tgl_sewa)));
+		// // print_r($now->diff($get_all_sewa->row()->tgl_sewa));
+		// echo "<pre";
+		// exit();
 	}
 
 }
