@@ -60,7 +60,7 @@
                                                 <td>
                                                     <a href="<?=site_url('sewa/list_details/'.$v->id);?>" class="btn btn-info">Detail</a>
                                                     <?php if(($this->session->userdata('jabatan') == '1') && ($v->status == 1)):?>
-                                                    <a href="<?=site_url('sewa/cancel_booking/'.$v->id);?>" class="btn btn-danger">Cancel Booking</a>
+                                                    <!-- <a href="<?=site_url('sewa/cancel_booking/'.$v->id);?>" class="btn btn-danger">Cancel Booking</a> -->
                                                 <?php endif;?>
                                                 </td>
                                             </tr>
