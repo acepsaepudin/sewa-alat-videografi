@@ -17,7 +17,7 @@ class Payment extends CI_Controller
 
 	public function add()
 	{
-		$this->form_validation->set_rules('jumlah_bayar', 'Jumlah Bayar', 'required');
+		$this->form_validation->set_rules('jumlah_bayar', 'Jumlah Bayar', 'required|is_natural_no_zero');
 		$this->form_validation->set_rules('tgl_bayar', 'Tanggal Bayar', 'required');
 		if ($this->form_validation->run() == false) {
 			$data['pembayaran'] = $this->pembayaran_model->get_all("customer_id = '".$this->session->userdata('data')['id']."' AND status != 3")->result();
@@ -58,6 +58,14 @@ class Payment extends CI_Controller
 				// 	$this->session->set_flashdata('error', array('Pembayaran '));
     //             	redirect('payment/add');
 				// }
+
+				//cek jika pembayaran tidak boleh melebihi total pembayaran
+				$byr_lebih = $this->pembayaran_model->get_by_id(['id' => $this->input->post('pembayaran_id')]);
+				$lebih = $this->sewa_model->get_by_id(['id' => $byr_lebih->sewa_id])->total_harga;
+				if ($this->input->post('jumlah_bayar') >= $lebih) {
+					$this->session->set_flashdata('err', 'Tidak bisa melebihi total pembayaran.');
+	                	redirect('payment/add');
+				}
 
 				//cek sudah bayar apa belum gan
             	$bayarbelum = $this->pembayarandetail_model->get_by_id(['pembayaran_id' => $this->input->post('pembayaran_id')]);

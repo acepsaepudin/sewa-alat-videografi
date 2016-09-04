@@ -64,7 +64,7 @@
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">Jumlah</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="jumlah_bayar" class="form-control" id="inputEmail3" value="<?=set_value('jumlah_bayar');?>" placeholder="Untuk DP Minimun Pembayaran 50% dari Total Pembayaran">
+                                        <input type="text" name="jumlah_bayar" class="form-control" id="inputEmail3" value="<?=set_value('jumlah_bayar');?>" placeholder="">
                                     </div>
                                 </div>
 
