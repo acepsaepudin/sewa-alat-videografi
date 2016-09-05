@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-body">
                         <?php if($pembayaran):?>
-                            <form class="form-horizontal" method="post" action="<?=site_url('payment/add');?>" enctype="multipart/form-data">
+                            <form class="form-horizontal" method="post" action="<?=site_url('payment/pelunasan');?>" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">ID Pembayaran</label>
                                     <div class="col-sm-10">

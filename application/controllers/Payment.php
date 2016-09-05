@@ -243,6 +243,7 @@ class Payment extends CI_Controller
             }
             else
             {
+            	// die('sini');
 				// $tipe_bayar = $this->input->post('tipe_bayar');
 				// //cek tipe pelunasan jika pembayaran belum sesuai dengan total yang harus dibayar
 				// if ($tipe_bayar == 2) {
@@ -258,12 +259,24 @@ class Payment extends CI_Controller
 				// }
 
 				//cek sudah bayar apa belum gan
-            	$bayarbelum = $this->pembayarandetail_model->get_by_id(['pembayaran_id' => $this->input->post('pembayaran_id')]);
+            	$bayarbelum = $this->pembayarandetail_model->get_by_id(['pembayaran_id' => $this->input->post('pembayaran_id'),'tipe_bayar' => $this->input->post('tipe_bayar')]);
             	if ($bayarbelum) {
-            		if ($bayarbelum->tipe_bayar == $this->input->post('tipe_bayar')) {
+            		if ($bayarbelum) {
             			$this->session->set_flashdata('err', 'Tidak bisa input tipe pembayaran yang sama.');
 	                	redirect('payment/pelunasan');
             		}
+            	}
+
+            	//cek nilai pelunasan harus sesuai dengan jumlah dp + sisa pelunasan = total tagihan
+            	$dp = $this->pembayarandetail_model->get_by_id(['pembayaran_id' => $this->input->post('pembayaran_id')]);
+            	
+
+            	$data_byr = $this->pembayaran_model->get_by_id(['id' => $dp->pembayaran_id]);
+            	$total_byr = $this->sewa_model->get_by_id(['id' => $data_byr->sewa_id])->total_harga;
+            	$sisa_byr = $total_byr - $dp->jumlah_bayar;
+            	if ($sisa_byr != $this->input->post('jumlah_bayar')) {
+            		$this->session->set_flashdata('err', "Jumlah pembayaran harus sama dengan sisa pembayaran yaitu $sisa_byr.");
+	                	redirect('payment/pelunasan');
             	}
             	
 
